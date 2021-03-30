@@ -36,7 +36,7 @@
   accept_languages: ["el"]
 - name: Español
   tag: es-ES
-  enabled: No
+  enabled: Yes
   accept_languages: ["es", "es-mx", "es-gt", "es-cr", "es-pa", "es-do", "es-ve", "es-co", "es-pe", "es-ar", "es-ec", "es-cl", "es-uy", "es-py", "es-bo", "es-sv", "es-hn", "es-ni", "es-pr"]
 - name: فارسی
   tag: fa-IR
@@ -60,7 +60,7 @@
   accept_languages: ["hu", "hu-HU"]
 - name: Bahasa Indonesia
   tag: id-ID
-  enabled: No
+  enabled: Yes
   accept_languages: ["id"]
 - name: Italiano
   tag: it
@@ -68,7 +68,7 @@
   accept_languages: ["it", "it-ch"]
 - name: 日本語
   tag: ja
-  enabled: No
+  enabled: Yes
   accept_languages: ["ja"]
 - name: 한국어
   tag: ko
@@ -104,7 +104,7 @@
   accept_languages: ["ro"]
 - name: Русский
   tag: ru
-  enabled: No
+  enabled: Yes
   accept_languages: ["ru", "ru-mo"]
 - name: Slovenský
   tag: sk-SK
@@ -120,11 +120,11 @@
   accept_languages: ["sv", "sv-fi"]
 - name: Türkçe
   tag: tr
-  enabled: No
+  enabled: Yes
   accept_languages: ["tr"]
 - name: Українська
   tag: uk
-  enabled: No
+  enabled: Yes
   accept_languages: ["uk"]
 - name: Tiếng Việt
   tag: vi
@@ -133,8 +133,8 @@
 - name: 中文
   tag: zh-Hans
   enabled: Yes
-  accept_languages: ["zh-cn", "zh-hk", "zh-tw", "zh-sg"]
+  accept_languages: ["zh-cn", "zh-sg"]
 - name: 繁體中文
   tag: zh-Hant
-  enabled: No
-  accept_languages: []
+  enabled: Yes
+  accept_languages: ["zh-hk", "zh-tw"]

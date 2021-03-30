@@ -59,6 +59,7 @@ https://registry.npmjs.org/[name]/-/[name]-[version].tgz
   "version": "1.0.0"
 }
 ```
+
 The current version of your package.
 
 ## Info <a class="toc" id="toc-info" href="#toc-info"></a>
@@ -160,7 +161,11 @@ The maintainers of your project.
 
 ```json
 {
-  "author": { "name": "Your Name", "email": "you@example.com", "url": "http://your-website.com" },
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com",
+    "url": "http://your-website.com"
+  },
   "author": "Your Name <you@example.com> (http://your-website.com)"
 }
 ```
@@ -192,11 +197,7 @@ You can specify files that will be included in your project, along with the main
 
 ```json
 {
-  "files": [
-    "filename.js",
-    "directory/",
-    "glob/*.{js,json}"
-  ]
+  "files": ["filename.js", "directory/", "glob/*.{js,json}"]
 }
 ```
 
@@ -269,7 +270,7 @@ Your package can include runnable scripts or other configuration.
 
 Scripts are a great way of automating tasks related to your package, such as simple build processes or development tools. Using the `"scripts"` field, you can define various scripts to be run as `yarn run <script>`. For example, the `build-project` script above can be invoked with `yarn run build-project` and will run `node build-project.js`.
 
-Certain script names are special. If defined, the `preinstall` script is called by yarn before your package is installed. For compatibility reasons, scripts called `install`, `postinstall`, and `prepublish` will all be called after your package has finished installing.
+Certain script names are special. If defined, the `preinstall` script is called by yarn before your package is installed. For compatibility reasons, scripts called `install`, `postinstall`, `prepublish`, and `prepare` will all be called after your package has finished installing.
 
 The `start` script value defaults to `node server.js`.
 
@@ -327,6 +328,22 @@ These are packages that are only required when developing your package but will 
 
 Peer dependencies allow you to state compatibility of your package with versions of other packages.
 
+### `peerDependenciesMeta` <a class="toc" id="toc-peerdependenciesmeta" href="#toc-peerdependenciesmeta"></a>
+
+```json
+{
+  "peerDependenciesMeta": {
+    "package-3": {
+      "optional": true
+    }
+  }
+}
+```
+
+Allows you to add metadata to peer dependencies.
+
+Currently only the `optional` tag is available. Setting it to true will suppress the warning for a missing peer dependency.
+
 ### `optionalDependencies` <a class="toc" id="toc-optionaldependencies" href="#toc-optionaldependencies"></a>
 
 ```json
@@ -343,9 +360,7 @@ Optional dependencies can be used with your package, but are not required. If th
 
 ```json
 {
-  "bundledDependencies": [
-    "package-4"
-  ]
+  "bundledDependencies": ["package-4"]
 }
 ```
 
@@ -362,6 +377,22 @@ Bundled dependencies are an array of package names that will be bundled together
 If your package only allows one version of a given dependency, and you'd like to enforce the same behavior as [`yarn install --flat`]({{url_base}}/docs/cli/install#toc-yarn-install-flat) on the command line, set this to `true`.
 
 Note that if your `package.json` contains `"flat": true` and other packages depend on yours (e.g. you are building a library rather than an application), those other packages will also need `"flat": true` in their `package.json` or be installed with `yarn install --flat` on the command line.
+
+### `resolutions` <a class="toc" id="toc-resolutions" href="#toc-resolutions"></a>
+
+```json
+{
+  "resolutions": {
+    "transitive-package-1": "0.0.29",
+    "transitive-package-2": "file:./local-forks/transitive-package-2",
+    "dependencies-package-1/transitive-package-3": "^2.1.1"
+  }
+}
+```
+
+Allows you to override a version of a particular nested dependency. See [the Selective Versions Resolutions RFC](https://github.com/yarnpkg/rfcs/blob/master/implemented/0000-selective-versions-resolutions.md) for the full spec.
+
+Note that installing dependencies via [`yarn install --flat`]({{url_base}}/docs/cli/install#toc-yarn-install-flat) will automatically add a `resolutions` block to your `package.json` file.
 
 ## System <a class="toc" id="toc-system" href="#toc-system"></a>
 
@@ -380,6 +411,8 @@ You can provide system-level information associated with your package, such as o
 ```
 
 The engines specify versions of clients that must be used with your package. This checks against `process.versions` as well as the current version of yarn.
+
+This check follows normal semver rules with one exception. It allows prerelease versions to match semvers that do not explicitly specify a prerelease. For example, `1.4.0-rc.0` matches `>=1.3.0`, while it would not match a typical semver check.
 
 ### `os` <a class="toc" id="toc-os" href="#toc-os"></a>
 

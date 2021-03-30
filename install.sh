@@ -7,7 +7,7 @@ green="\033[32m"
 yellow="\033[33m"
 cyan="\033[36m"
 white="\033[37m"
-gpg_key=9D41F3C3
+gpg_key=23E7166788B63E1E
 
 yarn_get_tarball() {
   printf "$cyan> Downloading tarball...$reset\n"
@@ -33,8 +33,12 @@ yarn_get_tarball() {
     yarn_verify_integrity $tarball_tmp
 
     printf "$cyan> Extracting to ~/.yarn...$reset\n"
+    # All this dance is because `tar --strip=1` does not work everywhere
+    temp=$(mktemp -d yarn.XXXXXXXXXX)
+    tar zxf $tarball_tmp -C "$temp"
     mkdir .yarn
-    tar zxf $tarball_tmp -C .yarn --strip 1 # extract tarball
+    mv "$temp"/*/* .yarn
+    rm -rf "$temp"
     rm $tarball_tmp*
   else
     printf "$red> Failed to download $url.$reset\n"
@@ -77,7 +81,7 @@ yarn_verify_integrity() {
 yarn_link() {
   printf "$cyan> Adding to \$PATH...$reset\n"
   YARN_PROFILE="$(yarn_detect_profile)"
-  SOURCE_STR="\nexport PATH=\"\$HOME/.yarn/bin:\$PATH\"\n"
+  SOURCE_STR="\nexport PATH=\"\$HOME/.yarn/bin:\$HOME/.config/yarn/global/node_modules/.bin:\$PATH\"\n"
 
   if [ -z "${YARN_PROFILE-}" ] ; then
     printf "$red> Profile not found. Tried ${YARN_PROFILE} (as defined in \$PROFILE), ~/.bashrc, ~/.bash_profile, ~/.zshrc, and ~/.profile.\n"
@@ -87,17 +91,18 @@ yarn_link() {
     printf "> Append the following lines to the correct file yourself:$reset\n"
     command printf "${SOURCE_STR}"
   else
-    if ! grep -q 'yarn' "$YARN_PROFILE"; then
+    if ! grep -q 'yarn/bin' "$YARN_PROFILE"; then
       if [[ $YARN_PROFILE == *"fish"* ]]; then
         command fish -c 'set -U fish_user_paths $fish_user_paths ~/.yarn/bin'
+        printf "$cyan> We've added ~/.yarn/bin to your fish_user_paths universal variable\n"
       else
         command printf "$SOURCE_STR" >> "$YARN_PROFILE"
+        printf "$cyan> We've added the following to your $YARN_PROFILE\n"
       fi
+      
+      echo "> If this isn't the profile of your current shell then please add the following to your correct profile:"
+      printf "   $SOURCE_STR$reset\n"
     fi
-
-    printf "$cyan> We've added the following to your $YARN_PROFILE\n"
-    echo "> If this isn't the profile of your current shell then please add the following to your correct profile:"
-    printf "   $SOURCE_STR$reset\n"
 
     version=`$HOME/.yarn/bin/yarn --version` || (
       printf "$red> Yarn was installed, but doesn't seem to be working :(.$reset\n"
@@ -180,10 +185,12 @@ yarn_install() {
       fi
       yarn_version=`yarn -V`
       yarn_alt_version=`yarn --version`
+
       if [ "$specified_version" = "$yarn_version" -o "$specified_version" = "$yarn_alt_version" ]; then
         printf "$green> Yarn is already at the $specified_version version.$reset\n"
         exit 0
       else
+      	printf "$yellow> $yarn_alt_version is already installed, Specified version: $specified_version.$reset\n"
         rm -rf "$HOME/.yarn"
       fi
     else

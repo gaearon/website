@@ -1,5 +1,6 @@
-$navbar-link-height: .425rem;
-$navbar-height: ($navbar-padding-y * 2) + ($navbar-link-height * 2) + ($font-size-base * $line-height-base);
+$navbar-link-height: 0.425rem;
+$navbar-height: ($navbar-padding-y * 2) + ($navbar-link-height * 2) +
+  ($font-size-base * $line-height-base);
 
 .navbar-icon {
   position: relative;
@@ -34,21 +35,24 @@ $navbar-height: ($navbar-padding-y * 2) + ($navbar-link-height * 2) + ($font-siz
   transition: fill 500ms ease;
 }
 
-.navbar-logo:hover {
-  .logo-primary {
-    fill: rgba(44, 242, 187, 0);
-  }
-}
-
-.navbar-logo #rainbow {
-  animation: fadeIn ease-in 1;
-}
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
 @include media-breakpoint-down('md') {
   .navbar-toggleable-md {
     clear: both;
+  }
+
+  .navbar-nav-right.navbar-nav .nav-item {
+    float: left;
+    margin-right: $navbar-padding-x;
+  }
+
+  .navbar-nav-right.navbar-nav .dropdown-menu {
+    position: absolute;
+  }
+}
+
+@include media-breakpoint-down('xs') {
+  .navbar-nav-right.navbar-nav .dropdown {
+    float: none;
   }
 }
 

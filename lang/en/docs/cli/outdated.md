@@ -15,9 +15,13 @@ and the latest available version.
 For example, say your `package.json` has the following dependencies listed:
 
 ```js
-"dependencies": {
-  "lodash": "4.15.0",
-  "underscore": "~1.6.0"
+{
+  "dependencies": {
+    "underscore": "~1.6.0"
+  },
+  "devDependencies": {
+    "lodash": "4.15.0"
+  }
 }
 ```
 
@@ -28,9 +32,9 @@ yarn outdated
 ```
 
 ```
-Package    Current Wanted Latest
-lodash     4.15.0  4.15.0 4.16.4
-underscore 1.6.0   1.6.0  1.8.3 
+Package    Current Wanted Latest Package Type    URL
+lodash     4.15.0  4.15.0 4.16.4 devDependencies https://github.com/lodash/lodash#readme
+underscore 1.6.0   1.6.0  1.8.3  dependencies    https://github.com/jashkenas/underscore#readme
 ✨  Done in 0.72s.
 ```
 
@@ -46,7 +50,7 @@ yarn outdated lodash
 ```
 
 ```
-Package Current Wanted Latest
-lodash  4.15.0  4.15.0 4.16.4
+Package Current Wanted Latest Package Type    URL
+lodash  4.15.0  4.15.0 4.16.4 devDependencies https://github.com/lodash/lodash#readme
 ✨  Done in 1.04s.
 ```

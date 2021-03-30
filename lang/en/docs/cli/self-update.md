@@ -8,6 +8,10 @@ layout: guide
 
 ##### `yarn self-update` <a class="toc" id="toc-yarn-self-update" href="#toc-yarn-self-update"></a>
 
-*Note: `self-update` is currently not available, which means updates must be done manually. See <a href="https://github.com/yarnpkg/yarn/issues/1139">issue #1139</a> for details.*
+_**Important**: `self-update` is not available. See [policies](https://yarnpkg.com/lang/en/docs/cli/policies/#toc-policies-set-version) for enforcing versions within a project_
 
-This command is used to update Yarn to the latest available version.
+In order to update your version of Yarn, you can run one of the following commands:
+
+- `npm install --global yarn` - if you've installed Yarn via npm (recommended)
+- `curl --compressed -o- -L - https://yarnpkg.com/install.sh | bash` if you're on Unix
+- otherwise, check the docs of the installer you've used to install Yarn

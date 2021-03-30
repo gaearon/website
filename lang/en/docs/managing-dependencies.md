@@ -72,8 +72,6 @@ yarn add package-3@beta
 }
 ```
 
-
-
 ### Upgrading a dependency <a class="toc" id="toc-upgrading-a-dependency" href="#toc-upgrading-a-dependency"></a>
 
 ```sh

@@ -27,7 +27,7 @@ your current project. To follow the above example, in the `react-relay` project,
 you'd run `yarn link react` to use your local version of `react` that you
 previously linked.
 
-Complete Example, assuming two project folders `react` and `react-relay` next to each other:
+Complete example, assuming two project folders `react` and `react-relay` next to each other:
 
 ```sh
 $ cd react
@@ -46,6 +46,8 @@ success Registered "react".
 
 This will create a symlink named `react-relay/node_modules/react` that links to
 your local copy of the `react` project.
+
+Links are registered in `~/.config/yarn/link`. If you want to specify a different folder you can run the command with this syntax `yarn link --link-folder path/to/dir/`
 
 To reverse this process, simply use `yarn unlink` or `yarn unlink [package]`. Also see:
 

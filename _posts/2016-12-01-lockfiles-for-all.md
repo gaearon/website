@@ -34,11 +34,11 @@ system designed around "breaking" or "non-breaking" changes.
 
 When you have a version such as `v1.2.3`, it's broken into three parts:
 
-- **Major (1.x.x)** – *Changes that may cause user code to break*
-- **Minor (x.2.x)** – *Changes that add new features (but should not break user
-  code)*
-- **Patch (x.x.3)** – *Changes that are fixing bugs in previous versions (but
-  do not add new features and should not break user code)*
+- **Major (1.x.x)** – _Changes that may cause user code to break_
+- **Minor (x.2.x)** – _Changes that add new features (but should not break user
+  code)_
+- **Patch (x.x.3)** – _Changes that are fixing bugs in previous versions (but
+  do not add new features and should not break user code)_
 
 When a package publishes a new version, the author bumps major, minor, or patch
 based on the changes that they have made as a way to communicate them.
@@ -47,7 +47,7 @@ Users of packages should typically welcome minor and patch versions but should
 be wary of major versions as they could break your code.
 
 Version ranges are a way of specifying which types of changes you want to
-accept and which versions you want to prevent.  These version ranges then
+accept and which versions you want to prevent. These version ranges then
 resolve down to a single version which is either the version you have installed
 or the latest published version that matches your version range.
 
@@ -61,7 +61,7 @@ for them to publish an accidental breaking change in a minor or patch version.
 If you install this breaking change when you don't intend to it could have bad
 consequences like breaking your app in production.
 
-Lockfiles *lock* the versions for every single dependency you have installed.
+Lockfiles _lock_ the versions for every single dependency you have installed.
 This prevents "Works On My Machine" problems, and ensures that you don't
 accidentally get a bad dependency.
 
@@ -73,10 +73,10 @@ you do not want that code to end up running without you knowing about it.
 
 There are two primary types of projects that use Yarn:
 
-- **Libraries** – *Projects that get published as packages to the registry and
-  installed by users. (i.e. React or Babel)*
-- **Applications** – *Projects that only consume other packages, typically
-  building some kind of product. (i.e. Your company's app)*
+- **Libraries** – _Projects that get published as packages to the registry and
+  installed by users. (e.g. React or Babel)_
+- **Applications** – _Projects that only consume other packages, typically
+  building some kind of product. (e.g. Your company's app)_
 
 For applications, most developers agree that lockfiles are A Good Idea™.
 But there has been some question about using them when building libraries.
@@ -95,7 +95,7 @@ It is important that Yarn behaves this way for two reasons:
 
 Some have wondered why libraries should use lockfiles at all if they do not and
 should not affect users. Even further, some have said that using lockfiles when
-developing libraries creates a *false sense of security* since your users could
+developing libraries creates a _false sense of security_ since your users could
 be installing different versions than you.
 
 This seems to logically makes sense, but let's dive deeper into the problem.
@@ -106,10 +106,10 @@ So far we've been talking about dependencies as if there were only one type of
 dependency when in fact there are several different types. These are broken
 down into two categories:
 
-- **Runtime** – *Dependencies that are used by the project's code and needed
-  when the code is run.*
-- **Development** – *Dependencies that are only needed to work directly on the
-  project*
+- **Runtime** – _Dependencies that are used by the project's code and needed
+  when the code is run._
+- **Development** – _Dependencies that are only needed to work directly on the
+  project_
 
 When a library is installed by a user, only the runtime dependencies are
 installed. The development dependencies are only ever installed when working
@@ -128,7 +128,7 @@ but it seems to hold true across every ecosystem. You almost always need more
 code to develop projects than you need to run them.
 
 When working on a library, it is far more likely that a development dependency
-breaks just because there are more of them that *could* break.
+breaks just because there are more of them that _could_ break.
 
 ## The Breaking Change Race
 
@@ -136,12 +136,12 @@ When a package accidentally publishes a breaking change it starts the clock on
 who will be the first person to catch it. Whoever installs that breaking change
 first will (most likely) be the first to discover it.
 
-Let's *imagine* we have a package called `left-pad` which takes a string and
+Let's _imagine_ we have a package called `left-pad` which takes a string and
 adds a specified amount of padding in front of it. This small and seemingly
 harmless package is used by a really big project, which we'll just call...
 Babel.
 
-One day, the maintainer of  `left-pad`  decides they are going to do something
+One day, the maintainer of `left-pad` decides they are going to do something
 unspeakably evil and make it pad the right side instead. They publish it as a
 patch version which quickly spreads to everyone using it.
 
@@ -187,7 +187,7 @@ suite the contributors can come up with.
 Users just write more code, and the code they write is not always what a
 library author will expect. The more popular the library the more edge cases
 users will find. Users will do things that you didn't even think was possible–
-it will *horrify* you. It will make you question the goodness of humanity.
+it will _horrify_ you. It will make you question the goodness of humanity.
 
 Even if a contributor happened to beat users to finding a breaking change,
 there's a pretty decent chance they won't catch it anyways. Untested edge cases
@@ -216,7 +216,7 @@ want to fix a bug or add a small feature to a library.
 ## The user's burden
 
 Of course not every breaking change is a development dependency, and
-theoretically contributors *could* catch breaking changes before users notice
+theoretically contributors _could_ catch breaking changes before users notice
 them. In that (narrow) scenario, aren't we shifting the burden from
 contributors to users?
 
@@ -231,8 +231,8 @@ For users upgrading their dependencies, they should be trained to look out for
 breaking changes and if they encounter one, to roll back the version to a
 working state and open an issue in the library.
 
-The only really negative experience that we are adding is for new users. Which
-is admittedly terrible, you want new users to have the best possible
+The only really negative experience that we are adding is for new users, which
+is admittedly terrible. You want new users to have the best possible
 experience.
 
 But remember that they already face this burden in the majority of cases. It's

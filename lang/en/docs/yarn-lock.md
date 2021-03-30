@@ -45,7 +45,7 @@ break something.
 
 ### Current package only <a class="toc" id="toc-current-package-only" href="#toc-current-package-only"></a>
 
-During install Yarn will only use the top-level `yarn.lock` file and will
+During install, Yarn will only use the top-level `yarn.lock` file and will
 ignore any `yarn.lock` files that exist within dependencies. The top-level
 `yarn.lock` file includes everything Yarn needs to lock the versions of all
 packages in the entire dependency tree.
@@ -56,6 +56,8 @@ All `yarn.lock` files should be checked into source control (e.g. git or
 mercurial). This allows Yarn to install the same exact dependency tree across
 all machines, whether it be your coworker's laptop or a CI server.
 
-Framework and library authors should also check `yarn.lock` into source 
+Framework and library authors should also check `yarn.lock` into source
 control. Don't worry about publishing the `yarn.lock` file as it won't have
 any effect on users of the library.
+
+See <https://yarnpkg.com/blog/2016/11/24/lockfiles-for-all/>.

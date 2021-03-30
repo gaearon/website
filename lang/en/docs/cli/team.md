@@ -8,7 +8,7 @@ layout: guide
 
 ##### `yarn team` <a class="toc" id="toc-yarn-team" href="#toc-yarn-team"></a>
 
-Manage teams in organizations, and change team memberships. 
+Manage teams in organizations, and change team memberships.
 
 ### Commands <a class="toc" id="toc-commands" href="#toc-commands"></a>
 
@@ -24,11 +24,11 @@ Destroys an existing team.
 
 Add a user to an existing team.
 
-##### `yarn team rm <scope:team> <user>` <a class="toc" id="toc-yarn-team-rm" href="#toc-yarn-team-rm"></a>
+##### `yarn team remove <scope:team> <user>` <a class="toc" id="toc-yarn-team-rm" href="#toc-yarn-team-rm"></a>
 
 Remove a user from a team they belong to.
 
-##### `yarn team ls <scope>|<scope:team>` <a class="toc" id="toc-yarn-team-ls" href="#toc-yarn-team-ls"></a>
+##### `yarn team list <scope>|<scope:team>` <a class="toc" id="toc-yarn-team-ls" href="#toc-yarn-team-ls"></a>
 
 If performed on an organization name, will return a list of existing teams under that organization. If performed on a team, it will instead return a list of all users belonging to that particular team.
 

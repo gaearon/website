@@ -9,156 +9,87 @@ additional_reading_tags: ["cli-add", "cli-tag", "dependencies-versions", "cli-up
 
 <p class="lead">Upgrades packages to their latest version based on the specified range.</p>
 
-##### `yarn upgrade` <a class="toc" id="toc-yarn-upgrade" href="#toc-yarn-upgrade"></a>
+##### `yarn upgrade [package | package@tag | package@version | --scope @scope]... [--ignore-engines] [--pattern]` <a class="toc" id="toc-yarn-upgrade-package-package-tag-package-version-scope-ignore-engines-pattern" href="#toc-yarn-upgrade-package-package-tag-package-version-scope-ignore-engines-pattern"></a>
 
-This command updates all dependencies to their latest version based on the
+This command updates dependencies to their latest version based on the
 version range specified in the `package.json` file. The `yarn.lock` file will
 be recreated as well.
 
-```sh
-yarn upgrade
-```
+Optionally, one or more package names can be specified.
+When package names are specified, only those packages will be upgraded.
+When no package names are specified, all dependencies will be upgraded.
 
-```
-yarn upgrade vx.x.x
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 867 new dependencies.
-[...]
-├─ jest-cli@16.0.1
-│  ├─ yargs-parser@3.2.0
-│  └─ yargs@5.0.0
-├─ jest-diff@16.0.0
-│  └─ diff@3.0.1
-[...]
-└─ yargs@4.8.1
-✨  Done in 20.79s.
-```
+`[package]` : When a specified package is only a name then the latest matching version
+of this package will be upgraded to.
 
-##### `yarn upgrade [package]` <a class="toc" id="toc-yarn-upgrade-package" href="#toc-yarn-upgrade-package"></a>
-
-This upgrades a single named package to the version specified by the `latest`
-tag (potentially upgrading the package across major versions).
-
-```sh
-yarn upgrade d3-scale
-```
-
-```
-yarn upgrade vx.x.x
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency
-└─ d3-scale@1.0.3
-✨  Done in 6.10s.
-```
-
-This will update your `package.json` to look like this:
-
-```diff
--  "d3-scale": "^0.9.3",
-+  "d3-scale": "^1.0.3",
-```
-
-##### `yarn upgrade [package@version]` <a class="toc" id="toc-yarn-upgrade-package-version" href="#toc-yarn-upgrade-package-version"></a>
-
-This will upgrade (or downgrade) an installed package to the specified version.
-You can use any
-[SemVer]({{url_base}}/docs/dependency-versions#toc-semantic-versioning) version
-number or range.
-
-```sh
-yarn upgrade d3-scale@1.0.2
-```
-
-```
-yarn upgrade vx.x.x
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency
-└─ d3-scale@1.0.2
-✨  Done in 6.43s.
-```
-
-This will update your `package.json` to look like this:
-
-```diff
--  "d3-scale": "^1.0.3",
-+  "d3-scale": "^1.0.2",
-```
-
-##### `yarn upgrade [package@tag]` <a class="toc" id="toc-yarn-upgrade-package-tag" href="#toc-yarn-upgrade-package-tag"></a>
-
-This will upgrade a package to the version identified by `tag`.
+`[package@tag]` : When a specified package contains a tag then the specified tag will
+be upgraded to.
 [Tag]({{url_base}}/docs/cli/tag#toc-what-are-tags) names are chosen by project
 maintainers, typically you use this command to install an experimental or long
 term support release of an actively developed package. The tag you choose will
 be the version that appears in your `package.json` file.
 
-```sh
-yarn upgrade react@next
-```
+`[package@version]` : When a specified package contains a version then the specified
+version will be upgraded to. The `package.json` dependency reference will also be changed
+to match this specified version.
+You can use any [SemVer]({{url_base}}/docs/dependency-versions#toc-semantic-versioning)
+version number or range.
 
-```
-yarn upgrade v0.16.0
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency
-└─ react@15.4.0-rc.4
-✨  Done in 3.73s.
-```
+`--ignore-engines` : This flag can be used to skip the engines check.
 
-This will update your `package.json` to look like:
-
-```diff
--  "react": "^15.3.2",
-+  "react": "next",
-```
-
-Similarly, using the `latest` tag will result in an updated `package.json` that
-looks like:
-
-```diff
--  "react": "^15.3.2",
-+  "react": "latest",
-```
-
-##### `yarn upgrade [package] --ignore-engines` <a class="toc" id="toc-yarn-upgrade-package-ignore-engines" href="#toc-yarn-upgrade-package-ignore-engines"></a>
-
-This upgrades a single named package to the version specified by the `latest`
-tag ignoring engines check.
+Examples:
 
 ```sh
-yarn upgrade d3-scale --ignore-engines
+yarn upgrade
+yarn upgrade left-pad
+yarn upgrade left-pad@^1.0.0
+yarn upgrade left-pad grunt
+yarn upgrade @angular
 ```
 
-```
-yarn upgrade vx.x.x
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 📃  Building fresh packages...
-success Saved lockfile.
-success Saved 1 new dependency
-└─ d3-scale@1.0.3
-✨  Done in 6.10s.
+`yarn upgrade --pattern <pattern>` will upgrade all packages that match the pattern.
+
+Examples:
+
+```sh
+yarn upgrade --pattern gulp
+yarn upgrade left-pad --pattern "gulp|grunt"
+yarn upgrade --latest --pattern "gulp-(match|newer)"
 ```
 
-This will update your `package.json` to look like this:
+##### `yarn upgrade [package]... --latest|-L [--caret | --tilde | --exact] [--pattern]` <a class="toc" id="toc-yarn-upgrade-package-latest-l-caret-tilde-exact-pattern" href="#toc-yarn-upgrade-package-latest-l-caret-tilde-exact-pattern"></a>
 
-```diff
--  "d3-scale": "^0.9.3",
-+  "d3-scale": "^1.0.3",
+The `upgrade --latest` command upgrades packages the same as the `upgrade` command,
+but ignores the version range specified in `package.json`.
+Instead, the version specified by the `latest` tag will be used
+(potentially upgrading the packages across major versions).
+
+The `package.json` file will be updated to reflect the latest version range.
+By default, the existing range specifier in `package.json` will be reused if
+it is one of: ^, ~, <=, >, or an exact version.
+Otherwise, it will be changed to a caret (^).
+One of the flags `--caret`, `--tilde` or `--exact` can be used to explicitly
+specify a range.
+
+Examples:
+
+```sh
+yarn upgrade --latest
+yarn upgrade left-pad --latest
+yarn upgrade left-pad grunt --latest --tilde
+```
+
+##### `yarn upgrade (--scope|-S) @scope [--latest] [--pattern]` <a class="toc" id="toc-yarn-upgrade-scope-s-scope-latest-pattern" href="#toc-yarn-upgrade-scope-s-scope-latest-pattern"></a>
+
+`--scope @scope` : When a scope is specified, only packages that begin with that scope will be upgraded. A scope must begin with '@'.
+
+`--latest` : Ignores the version range specified in `package.json`.
+Instead, the version specified by the `latest` tag will be used
+(potentially upgrading the packages across major versions).
+
+Examples:
+
+```sh
+yarn upgrade --scope @angular
+yarn upgrade -S @angular
 ```

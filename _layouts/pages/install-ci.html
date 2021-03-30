@@ -1,32 +1,58 @@
 ---
 layout: guide
 scripts:
-  - "/js/build/install.js"
+- "/js/build/install.js"
 ---
 
 {% include vars.html %}
 
 {{i18n.ci_intro}}
 
-{% capture travis    %}{% include_relative _ci/travis.md    %}{% endcapture %}
-{% capture semaphore %}{% include_relative _ci/semaphore.md %}{% endcapture %}
-{% capture appveyor  %}{% include_relative _ci/appveyor.md  %}{% endcapture %}
-{% capture circle    %}{% include_relative _ci/circle.md    %}{% endcapture %}
-{% capture codeship  %}{% include_relative _ci/codeship.md  %}{% endcapture %}
-{% capture solano    %}{% include_relative _ci/solano.md    %}{% endcapture %}
+{% capture travis %}
+  {% include_relative _ci/travis.md %}
+{% endcapture %}
+{% capture semaphore %}
+  {% include_relative _ci/semaphore.md %}
+{% endcapture %}
+{% capture appveyor %}
+  {% include_relative _ci/appveyor.md %}
+{% endcapture %}
+{% capture circle %}
+  {% include_relative _ci/circle.md %}
+{% endcapture %}
+{% capture codeship %}
+  {% include_relative _ci/codeship.md %}
+{% endcapture %}
+{% capture solano %}
+  {% include_relative _ci/solano.md %}
+{% endcapture %}
+{% capture gitlab %}
+  {% capture exists %}{% file_exists _ci/gitlab.md %}{% endcapture %}
+  {% if exists == "true" %}
+    {% include_relative _ci/gitlab.md %}
+  {% endif %}
+{% endcapture %}
+{% capture codefresh %}
+  {% capture exists %}{% file_exists _ci/codefresh.md %}{% endcapture %}
+  {% if exists == "true" %}
+    {% include_relative _ci/codefresh.md %}
+  {% endif %}
+{% endcapture %}
 
 
 <div class="tabs">
-  <div class="nav nav-tabs bg-faded text-center">
-    <ul class="nav navbar-nav nav-inline">
+  <nav>
+    <div class="nav nav-tabs bg-faded text-center" id="nav-tab">
       <a id="appveyor-tab" class="nav-item nav-link" data-toggle="tab" href="#appveyor">{{i18n.ci_appveyor}}</a>
       <a id="circle-tab" class="nav-item nav-link" data-toggle="tab" href="#circle">{{i18n.ci_circle}}</a>
       <a id="codeship-tab" class="nav-item nav-link" data-toggle="tab" href="#codeship">{{i18n.ci_codeship}}</a>
       <a id="travis-tab" class="nav-item nav-link" data-toggle="tab" href="#travis">{{i18n.ci_travis}}</a>
       <a id="semaphore-tab" class="nav-item nav-link" data-toggle="tab" href="#semaphore">{{i18n.ci_semaphore}}</a>
       <a id="solano-tab" class="nav-item nav-link" data-toggle="tab" href="#solano">{{i18n.ci_solano}}</a>
-    </ul>
-  </div>
+      <a id="gitlab-tab" class="nav-item nav-link" data-toggle="tab" href="#gitlab">{{i18n.ci_gitlab}}</a>
+      <a id="codefresh-tab" class="nav-item nav-link" data-toggle="tab" href="#codefresh">{{i18n.ci_codefresh}}</a>
+    </div>
+  </nav>
 
   <div class="tab-content">
     <div id="select-platform" class="tab-pane bg-faded active">
@@ -40,5 +66,7 @@ scripts:
     <div class="tab-pane" id="travis">{{ travis | markdownify }}</div>
     <div class="tab-pane" id="semaphore">{{ semaphore | markdownify }}</div>
     <div class="tab-pane" id="solano">{{ solano | markdownify }}</div>
+    <div class="tab-pane" id="gitlab">{{ gitlab | markdownify }}</div>
+    <div class="tab-pane" id="codefresh">{{ codefresh | markdownify }}</div>
   </div>
 </div>

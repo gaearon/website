@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-if (process.env.CONTEXT === 'deploy-preview') {
-  console.log('sitemap generation skipped');
-} else {
+if (
+  process.env.CONTEXT === 'production' &&
+  process.env.BUILD_SITEMAP !== 'false'
+) {
   const algoliaSitemap = require('algolia-sitemap');
-  const { mkdirSync } = require('fs');
+  const { mkdirSync, existsSync } = require('fs');
 
   const algoliaConfig = {
     appId: 'OFCNCOG2CU',
@@ -17,7 +18,7 @@ if (process.env.CONTEXT === 'deploy-preview') {
       `https://yarnpkg.com/${lang}/package/${name}`;
     const loc = url({ lang: 'en', name: hit.name });
     const lastmod = new Date(hit.modified).toISOString();
-    const priority = hit.downloadsRatio;
+    const priority = hit.downloadsRatio || 0.5;
     return {
       loc,
       lastmod,
@@ -31,14 +32,21 @@ if (process.env.CONTEXT === 'deploy-preview') {
 
   const path = `${__dirname}/../sitemaps`;
 
-  mkdirSync(`${__dirname}/../sitemaps`);
+  if (!existsSync(path)) {
+    mkdirSync(path);
+  }
 
   algoliaSitemap({
     algoliaConfig,
-    sitemapLocation: {
-      href: 'https://yarnpkg.com/sitemaps',
-      path,
-    },
+    sitemapLoc: 'https://yarnpkg.com/sitemaps',
+    outputFolder: path,
     hitToParams,
-  });
+  })
+    .then(() => console.log('Sitemap generated successfully'))
+    .catch(e => {
+      console.log(e);
+      process.exit(1);
+    });
+} else {
+  console.log('sitemap generation skipped');
 }

@@ -2,8 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const HappyPack = require('happypack');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-let plugins = [
+const plugins = [
   new webpack.EnvironmentPlugin({
     NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
   }),
@@ -27,10 +28,9 @@ let plugins = [
   }),
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
-    minChunks: module => {
-      // this assumes your vendor imports exist in the node_modules directory
-      return module.context && module.context.indexOf('node_modules') !== -1;
-    },
+    // this assumes your vendor imports exist in the node_modules directory
+    minChunks: module =>
+      module.context && module.context.includes('node_modules'),
   }),
   new webpack.LoaderOptionsPlugin({
     minimize: true,
@@ -38,28 +38,35 @@ let plugins = [
   new webpack.NamedModulesPlugin(),
 ];
 
+if (process.env.NODE_ENV === 'debug') {
+  plugins.push(new BundleAnalyzerPlugin());
+}
+
 if (process.env.NODE_ENV === 'production') {
   plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
   plugins.push(new webpack.optimize.UglifyJsPlugin({ sourceMap: true }));
 }
 
 module.exports = {
-  devtool: process.env.NODE_ENV === 'production'
-    ? 'source-map'
-    : 'cheap-source-map',
+  devtool:
+    process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-source-map',
+
+  context: path.resolve(__dirname, 'js/src'),
+
   entry: {
-    common: './js/src/common.js',
-    documentation: './js/src/documentation.js',
-    install: './js/src/install.js',
-    nightly: './js/src/nightly.js',
-    packages: './js/src/packages.js',
-    package: './js/src/package.js',
+    common: './common.js',
+    documentation: './documentation.js',
+    install: './install.js',
+    nightly: './nightly.js',
+    packages: './packages.js',
+    package: './package.js',
   },
   output: {
-    path: path.join(__dirname, './js/build'),
-    filename: process.env.NODE_ENV === 'production'
-      ? '[name].[chunkhash].js'
-      : '[name].js',
+    path: path.resolve(__dirname, 'js/build'),
+    filename:
+      process.env.NODE_ENV === 'production'
+        ? '[name].[chunkhash].js'
+        : '[name].js',
   },
   module: {
     rules: [
@@ -67,9 +74,9 @@ module.exports = {
         test: /\.js$/,
         use: ['happypack/loader'],
         include: [
-          path.join(__dirname, 'js/src'),
+          path.resolve(__dirname, 'js/src'),
           // bootstrap 4 also has js/dist but those files are not requireable
-          path.join(__dirname, 'node_modules/bootstrap/js/src'),
+          path.resolve(__dirname, 'node_modules/bootstrap/js/src'),
         ],
       },
     ],

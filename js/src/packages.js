@@ -1,83 +1,83 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import algoliasearch from 'algoliasearch/lite';
-import { Owner } from './lib/Hit';
-import { packageLink, Keywords } from './lib/util';
-import { algolia } from './lib/config';
+import PropTypes from 'prop-types';
+import {
+  InstantSearch,
+  Configure,
+  connectHits,
+  connectRefinementList,
+} from 'react-instantsearch-dom';
+import { Owner, Keywords } from './components';
+import { packageLink } from './util';
+import { algolia } from './util/config';
 
 const FEATURED = ['babel-core', 'react', 'async', 'lodash', 'debug', 'qs'];
 
-const client = algoliasearch(algolia.appId, algolia.apiKey);
-const index = client.initIndex(algolia.indexName);
+const FeaturedPackage = ({ name, owner, description, keywords }) => (
+  <div className="pkg-featured-pkg">
+    <Owner name={owner.name} link={owner.link} avatar={owner.avatar} />
+    <a className="ais-Hit-name" href={packageLink(name)}>
+      {name}
+    </a>
+    <p>{description}</p>
+    <Keywords keywords={keywords} />
+  </div>
+);
 
-class FeaturedPackage extends Component {
-  static propTypes = {
+FeaturedPackage.propTypes = {
+  name: PropTypes.string.isRequired,
+  owner: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    owner: PropTypes.shape({
-      link: PropTypes.string.isRequired,
-      avatar: PropTypes.string.isRequired,
-    }),
-    description: PropTypes.string.isRequired,
-    keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
-  };
+    link: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+  }),
+  description: PropTypes.string.isRequired,
+  keywords: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
-  render() {
-    const { name, owner, description, keywords } = this.props;
-    return (
-      <div className="pkg-featured-pkg">
-        <Owner {...owner} />
-        <a className="ais-Hit--name" href={packageLink(name)}>
-          {name}
-        </a>
-        <p>{description}</p>
-        <Keywords keywords={keywords} />
-      </div>
-    );
-  }
-}
+const FilterByIds = connectRefinementList(() => null);
 
-class Featured extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      featured: [],
-    };
-  }
+const Hits = connectHits(({ hits }) => {
+  const half = Math.floor(hits.length / 2);
+  const groups = [hits.slice(0, half), hits.slice(half, hits.length)];
+  return (
+    <div className="row">
+      {groups.map((packages, i) => (
+        <div className="col-md-6" key={i}>
+          {packages.map(({ name, description, owner, keywords, objectID }) => (
+            <FeaturedPackage
+              name={name}
+              description={description}
+              owner={owner}
+              keywords={keywords}
+              objectID={objectID}
+              key={objectID}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+});
 
-  componentWillMount() {
-    index.getObjects(this.props.packages).then(content => {
-      this.setState({
-        featured: content.results,
-      });
-    });
-  }
-
-  render() {
-    const { featured } = this.state;
-    const half = Math.floor(featured.length / 2);
-    const groups = [
-      featured.slice(0, half),
-      featured.slice(half, featured.length),
-    ];
-    const hasContent = groups.every(group => group.length > 0);
-    return (
-      <div className="row">
-        {hasContent
-          ? groups.map((packages, i) => (
-              <div className="col-md-6" key={i}>
-                {packages.map(pkg => (
-                  <FeaturedPackage {...pkg} key={pkg.objectID} />
-                ))}
-              </div>
-            ))
-          : ''}
-      </div>
-    );
-  }
-}
+const Featured = ({ objectIDs }) => (
+  <InstantSearch
+    appId={algolia.appId}
+    apiKey={algolia.apiKey}
+    indexName={algolia.indexName}
+  >
+    <Configure
+      analytics={false}
+      hitsPerPage={6}
+      attributesToRetrieve={['name', 'owner', 'description', 'keywords']}
+      attributesToHighlight={[]}
+    />
+    <FilterByIds attribute="objectID" defaultRefinement={objectIDs} />
+    <Hits />
+  </InstantSearch>
+);
 
 ReactDOM.render(
-  <Featured packages={FEATURED} />,
+  <Featured objectIDs={FEATURED} />,
   document.getElementById('pkg-featured')
 );

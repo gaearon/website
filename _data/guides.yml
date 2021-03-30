@@ -39,6 +39,12 @@
     path: /docs/cli/add
     tags: ["cli-add"]
     description: docs_cli_add_description
+  - id: docs_cli_audit
+    path: /docs/cli/audit
+    tags: ["cli-audit"]
+  - id: docs_cli_autoclean
+    path: /docs/cli/autoclean
+    tags: ["cli-autoclean"]
   - id: docs_cli_bin
     path: /docs/cli/bin
     tags: ["cli-bin"]
@@ -48,15 +54,15 @@
   - id: docs_cli_check
     path: /docs/cli/check
     tags: ["cli-check"]
-  - id: docs_cli_clean
-    path: /docs/cli/clean
-    tags: ["cli-clean"]
   - id: docs_cli_config
     path: /docs/cli/config
     tags: ["cli-config"]
   - id: docs_cli_create
     path: /docs/cli/create
     tags: ["cli-create"]
+  - id: docs_cli_dedupe
+    path: /docs/cli/dedupe
+    tags: ["cli-dedupe"]
   - id: docs_cli_generate_lock_entry
     path: /docs/cli/generate-lock-entry
     tags: ["cli-generate-lock-entry"]
@@ -84,15 +90,18 @@
   - id: docs_cli_link
     path: /docs/cli/link
     tags: ["cli-link"]
+  - id: docs_cli_list
+    path: /docs/cli/list
+    tags: ["cli-list"]
+  - id: docs_cli_lockfile
+    path: /docs/cli/lockfile
+    tags: ["cli-lockfile"]
   - id: docs_cli_login
     path: /docs/cli/login
     tags: ["cli-login"]
   - id: docs_cli_logout
     path: /docs/cli/logout
     tags: ["cli-logout"]
-  - id: docs_cli_list
-    path: /docs/cli/list
-    tags: ["cli-list"]
   - id: docs_cli_outdated
     path: /docs/cli/outdated
     tags: ["cli-outdated"]
@@ -102,6 +111,12 @@
   - id: docs_cli_pack
     path: /docs/cli/pack
     tags: ["cli-pack"]
+  - id: docs_cli_policies
+    path: /docs/cli/policies
+    tags: ["cli-policies"]
+  - id: docs_cli_prune
+    path: /docs/cli/prune
+    tags: ["cli-prune"]
   - id: docs_cli_publish
     path: /docs/cli/publish
     tags: ["cli-publish"]
@@ -142,6 +157,12 @@
   - id: docs_cli_why
     path: /docs/cli/why
     tags: ["cli-why"]
+  - id: docs_cli_workspace
+    path: /docs/cli/workspace
+    tags: ["cli-workspace"]
+  - id: docs_cli_workspaces
+    path: /docs/cli/workspaces
+    tags: ["cli-workspaces"]
 
 - id: docs_migrating_from_npm
   title: docs_migrating_from_npm_title
@@ -174,6 +195,10 @@
     path: /docs/dependency-versions
     tags: ["dependencies-versions"]
     description: docs_dependency_versions_description
+  - id: docs_selective_version_resolutions
+    path: /docs/selective-version-resolutions
+    tags: ["dependencies-versions"]
+    description: docs_selective_version_resolutions_description
 
 - id: docs_configuration
   title: docs_configuration_title
@@ -203,6 +228,24 @@
     path: /docs/offline-mirror
   - id: docs_prune_offline_mirror
     path: /docs/prune-offline-mirror
+
+- id: docs_workspaces
+  title: docs_workspaces_title
+  description: docs_workspaces_description
+  pages:
+  - id: docs_workspaces
+    path: /docs/workspaces
+
+- id: docs_plugnplay
+  title: docs_plugnplay_title
+  description: docs_plugnplay_description
+  pages:
+  - id: docs_plugnplay_overview
+    path: /docs/pnp
+  - id: docs_plugnplay_getting_started
+    path: /docs/pnp/getting-started
+  - id: docs_plugnplay_troubleshooting
+    path: /docs/pnp/troubleshooting
 
 - id: yarn_organization
   title: yarn_organization_title

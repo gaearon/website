@@ -5,12 +5,18 @@
 site_title: Yarn
 site_description: Fast, reliable, and secure dependency management.
 
+site_news_important: Important
+site_news_docs_cover_v1: This documentation covers Yarn 1 (Classic).
+site_news_see_v2_docs: For Yarn 2+ docs and migration guide, see yarnpkg.com.
+
 site_nav_getting_started: Getting Started
 site_nav_documentation: Docs
 site_nav_packages: Packages
 site_nav_blog: Blog
-site_nav_stable_version: Stable
-site_nav_rc_version: Release Candidate
+site_nav_stable_version: Classic Stable
+site_nav_rc_version: Classic Release Candidate
+site_nav_nightly_version: Classic Nightly
+site_nav_node_support: Node
 
 site_bsd_license: Distributed under BSD License
 site_code_of_conduct: Code of Conduct
@@ -51,6 +57,7 @@ homepage_feature_reliable_image_alt: Watercolour of cat waving from seat behind 
 homepage_c2a_text: What are you waiting for?
 homepage_c2a_button: Get Started
 homepage_install_button: Install Yarn
+homepage_migrate_button: Migrate to Yarn 2+
 
 homepage_featurette_offline_title: Offline Mode
 homepage_featurette_offline_description: |
@@ -112,12 +119,14 @@ docs_cli_add: yarn add
 docs_cli_add_description: |
   When you want to use another package, you first need to add it to
   your dependencies. Running `yarn add` installs it into your project.
+docs_cli_audit: yarn audit
+docs_cli_autoclean: yarn autoclean
 docs_cli_bin: yarn bin
 docs_cli_cache: yarn cache
 docs_cli_check: yarn check
-docs_cli_clean: yarn clean
 docs_cli_config: yarn config
 docs_cli_create: yarn create
+docs_cli_dedupe: yarn dedupe
 docs_cli_generate_lock_entry: yarn generate-lock-entry
 docs_cli_global: yarn global
 docs_cli_help: yarn help
@@ -127,12 +136,15 @@ docs_cli_init: yarn init
 docs_cli_install: yarn install
 docs_cli_licenses: yarn licenses
 docs_cli_link: yarn link
+docs_cli_lockfile: yarn lockfile
 docs_cli_login: yarn login
 docs_cli_logout: yarn logout
 docs_cli_list: yarn list
 docs_cli_outdated: yarn outdated
 docs_cli_owner: yarn owner
 docs_cli_pack: yarn pack
+docs_cli_policies: yarn policies
+docs_cli_prune: yarn prune
 docs_cli_publish: yarn publish
 docs_cli_remove: yarn remove
 docs_cli_run: yarn run
@@ -152,7 +164,9 @@ docs_cli_upgrade_interactive_description: |
   Provides an easy and interactive way to update outdated packages.
 docs_cli_version: yarn version
 docs_cli_versions: yarn versions
+docs_cli_workspace: yarn workspace
 docs_cli_why: yarn why
+docs_cli_workspaces: yarn workspaces
 
 docs_migrating_from_npm_title: Migrating from npm client
 docs_migrating_from_npm_description: |
@@ -182,6 +196,10 @@ docs_dependency_versions_description: |
   Packages in Yarn follow Semantic Versioning, also known as “semver”. When you
   install a new package it will be added with a semver version range.
 
+docs_selective_version_resolutions: Selective dependency resolutions
+docs_selective_version_resolutions_description: |
+  Override sub-dependency version resolutions with Yarn.
+
 docs_configuration_title: Configuration
 docs_configuration_description: |
   Learn how to use package.json to configure your packages and dependencies.
@@ -200,6 +218,20 @@ docs_offline_mirror_description: |
 
 docs_prune_offline_mirror: Pruning an Offline Mirror
 
+docs_workspaces: Workspaces
+docs_workspaces_title: Workspaces
+docs_workspaces_description: |
+  Link together your projects for easier maintenance.
+
+docs_plugnplay: "Plug'n'Play"
+docs_plugnplay_title: "Plug'n'Play"
+docs_plugnplay_description: |
+  Install your projects in a safer and faster way.
+
+docs_plugnplay_overview: Overview
+docs_plugnplay_getting_started: Getting Started
+docs_plugnplay_troubleshooting: Troubleshooting
+
 yarn_organization_title: Yarn Organization
 yarn_organization_description: |
   The Yarn organization is a collaboration of many companies and
@@ -211,6 +243,8 @@ contributing: Contributing
 translations: Translations
 release_process: Release Process
 governance: Governance
+
+read_more: Read more
 
 users: Yarn Users
 compare: Compare Yarn Performance
@@ -233,21 +267,25 @@ users_add_requirements_logo: >
 
 install_intro: >
   Before you start using Yarn, you'll first need to install it on your system.
-  There is a growing number of different ways to install Yarn:
+  There are many different ways to install Yarn, but a single one is recommended and cross-platform:
+install_alternatives: Alternatives
+install_click_to_expand_collapse: Click to expand / collapse
 install_select_platform: Select your platform above
+install_os: Operating system
+install_version: Version
+install_os_alpine: Alpine
+install_os_arch: Arch Linux
+install_os_centos: CentOS / Fedora / RHEL
+install_os_debian: Debian / Ubuntu
+install_os_gentoo: Gentoo Linux
 install_os_mac: macOS
+install_os_opensuse: openSUSE
+install_os_solus: Solus
 install_os_windows: Windows
-install_os_linux: Linux
 install_os_alternatives: Alternatives
 
-install_test: "Test that Yarn is installed by running:"
-
-install_problems_title: Problems?
-install_problems_description: >
-  If you are unable to install Yarn with any of these installers, please search
-  through GitHub for an existing issue or open a new one.
-install_problems_search: Search for an existing issue
-install_problems_new_issue: Open a new issue
+install_check: "Check installation"
+install_check_details: "Check that Yarn is installed by running:"
 
 docs_nightly: Nightly Builds
 install_nightly_intro: >
@@ -287,6 +325,8 @@ ci_codeship: Codeship
 ci_travis: Travis
 ci_semaphore: Semaphore
 ci_solano: Solano
+ci_gitlab: GitLab
+ci_codefresh: Codefresh
 
 search_docs: Search documentation
 detail:
@@ -302,11 +342,16 @@ script:
 
   downloads_in_last_30_days: '{count} downloads in the last 30 days'
   npm_page_for: 'npm page for {name}'
-  github_repo_of: 'GitHub repository of {name}'
+  repository_of: '{provider} repository of {name}'
   npm: npm
   github: GitHub
+  gitlab: GitLab
+  bitbucket: Bitbucket
   homepage: Homepage
   deprecated: deprecated
+  result_stats: 'found {number_packages} packages in {time_search}ms'
+  time_ago: '{time_distance} ago'
+  last_updated: 'last updated {update_date}'
 
   detail:
     over_a_year_ago: over a year ago
@@ -321,6 +366,7 @@ script:
     try_in_runkit: Try in RunKit
     back_to_details: Back to Details
     browse_files: Browse Files
+    cdns: CDNs
     contributors: Contributors
     display_full_readme: Display full readme
     display_full_changelog: Display full changelog
@@ -332,13 +378,23 @@ script:
     changelog: changelog
     popularity: Popularity
     github_stargazers: GitHub stargazers
+    gitlab_stargazers: GitLab stargazers
     downloads_last_30_days: Downloads last 30 days
+    jsdelivr_hits: jsDelivr last 30 days
     dependents: Dependents
     usage: Usage
     dependencies: Dependencies
     devdependencies: DevDependencies
     packages: Packages
     see_package_json: see package.json
+    tags: Tags
     versions: Versions
     display_all: Display all
     hide: Hide
+    bundlesize: Size in browser
+    bundlesize_text: 'size: {size}, gzip: {gzip}'
+
+    not_found:
+      whoa: Whoa, {package_name} does not exist yet
+      yours: But that means it is now yours!
+      make: Make your package

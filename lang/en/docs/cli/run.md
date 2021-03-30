@@ -21,7 +21,7 @@ You may define [`scripts`]({{url_base}}/docs/package-json#toc-scripts) in your
 }
 ```
 
-##### `yarn run [script] [-- <args>]` <a class="toc" id="toc-yarn-run-script" href="#toc-yarn-run-script"></a>
+##### `yarn run [script] [<args>]` <a class="toc" id="toc-yarn-run-script" href="#toc-yarn-run-script"></a>
 
 If you have defined a `scripts` object in your package, this command will run
 the specified `[script]`. For example:
@@ -33,15 +33,42 @@ yarn run test
 Running this command will execute the script named `"test"` in your
 `package.json`.
 
-You can pass additional arguments to your script by using `--`.
+You can pass additional arguments to your script by passing them after the script name.
 
 ```sh
-yarn run test -- -o --watch
+yarn run test -o --watch
 ```
 
 Running this command will execute `jest -o --watch`.
 
 `[script]` can also be any locally installed executable that is inside `node_modules/.bin/`.
+
+It's also possible to leave out the `run` in this command, each script can be executed with its name:
+
+```sh
+yarn test -o --watch
+```
+
+Running this command will do the same as `yarn run test -o --watch`. Note that built-in cli commands will have preference over your scripts, so you shouldn't always rely on this shortcut in other scripts.
+
+By default, a specified `[script]` can be prefixed with `pre` or `post` to execute before another. 
+
+```json
+{
+  "name": "my-package",
+  "scripts": {
+    "build": "babel src -d lib",
+    "prebuild": "jest"
+  }
+}
+```
+Running `yarn run build` will execute `yarn run prebuild` prior to `yarn build`.
+
+##### `yarn run env` <a class="toc" id="toc-yarn-run-env" href="#toc-yarn-run-env"></a>
+
+Running this command will list environment variables available to the scripts at runtime.
+
+If you want to override this command, you can do so by defining your own `"env"` script in `package.json`.
 
 ##### `yarn run` <a class="toc" id="toc-yarn-run" href="#toc-yarn-run"></a>
 

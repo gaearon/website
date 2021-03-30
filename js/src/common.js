@@ -4,8 +4,11 @@ import 'bootstrap/js/src/collapse.js';
 import 'bootstrap/js/src/tab.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { fillLanguageDropdown } from './lib/production';
-import Search from './lib/Search';
+import { checkServiceStatus } from './util/serviceStatus';
+import { fillLanguageDropdown } from './util/production';
+import { Search } from './components';
+
+checkServiceStatus();
 
 ReactDOM.render(<Search />, document.getElementById('search'));
 

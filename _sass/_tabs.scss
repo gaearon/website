@@ -1,4 +1,3 @@
-
 .tabs {
   margin: 1rem 0;
 
@@ -12,8 +11,17 @@
     padding: $spacer;
 
     > {
-      h1, h2, h3, h4, h5, h6,
-      p, ul, ol, pre, blockquote,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      ul,
+      ol,
+      pre,
+      blockquote,
       .highlighter-rouge {
         &:first-child {
           margin-top: 0;
